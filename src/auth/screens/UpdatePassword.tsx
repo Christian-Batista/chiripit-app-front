@@ -1,10 +1,10 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 
-const Login = () => {
+const UpdatePassword = () => {
     return (
         <View style={styles.container}>
-            <Text>Hola desde Login</Text>
+            <Text>Hola desde UpdatePassword</Text>
         </View>
     );
 }
@@ -16,5 +16,4 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     }
 })
-
-export default Login;
+export default UpdatePassword;
