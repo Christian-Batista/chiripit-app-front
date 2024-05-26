@@ -5,6 +5,7 @@ import Opening from "../Opening"
 import ApiTest from '../ApiTest';
 import UpdatePassword from '../auth/screens/UpdatePassword'
 import Register from '../auth/screens/Register';
+import Home from '../home/screens/Home';
 
 const Stack = createNativeStackNavigator();
 
@@ -18,6 +19,7 @@ const StackNavigator = () => {
             <Stack.Screen name='Opening' component={Opening}/>
             <Stack.Screen name='Login' component={Login}/>
             <Stack.Screen name='Register' component={Register}/>
+            <Stack.Screen name='Home' component={Home}/>
             <Stack.Screen name='UpdatePassword' component={UpdatePassword}/>
             <Stack.Screen name='ApiTest' component={ApiTest}/>
         </Stack.Navigator>

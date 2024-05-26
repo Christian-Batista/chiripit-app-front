@@ -5,7 +5,7 @@ import DarkButtom from "../components/DarkButton";
 import SmallInput from "../components/SmallInput";
 import axios from "axios"
 import { API_ROUTE } from "@env";
-import ValidationErrorHandler from '../services/ValidationErrorHandler.js'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Register = ({ navigation }) => {
     const [name, setName] = useState("");
@@ -24,15 +24,11 @@ const Register = ({ navigation }) => {
               password: password,
               confirm_password: confirmPassword
             })
-            console.log(response.data)
+            //guardar el token en el localStorage
+            await AsyncStorage.setItem('jwtToken', response.data.response.token);
+            navigation.navigate('Home');
         } catch (error) {
-            if (error.response) {
-              //esto me va a dar los errores que tenga en la aplicacion
-              //debo de llenar mensajes de error con estos datos que llegan aqui.
-              const errorMessages = ValidationErrorHandler.getMessage(error.response.data.errors);
-              console.log(errorMessages);
-
-            }
+            Alert.alert("Error", error.message);
         }
     }
 
