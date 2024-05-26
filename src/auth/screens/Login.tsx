@@ -1,12 +1,31 @@
-import React from 'react';
-import {Image, StyleSheet, Text, View, TouchableOpacity, SafeAreaView} from 'react-native';
+import React, { useState } from 'react';
+import {Image, StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Alert} from 'react-native';
 import GreyInput from '../components/GreyInput';
 import DarkButtom from '../components/DarkButton';
 import LineComponent from '../components/LineComponent';
 import GoogleSignInButton from '../components/GoogleSignInButton';
 import FacebookSignInButton from '../components/FacebookSignInButton';
+import { API_ROUTE } from '@env';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = ({ navigation }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handlerLogin =  async () => {
+    try {
+      const response = await axios.post(`${API_ROUTE}/login`, {
+        email: email,
+        password: password,
+      })
+      //guardar el token en el localStorage
+      await AsyncStorage.setItem('jwtToken', response.data.response.token);
+      navigation.navigate('Home');
+  } catch (error) {
+    Alert.alert("Error", error.message);
+  }
+  }
   return (
     <SafeAreaView style={styles.container}>
             <View style={styles.logoContainer}>
@@ -16,15 +35,22 @@ const Login = ({ navigation }) => {
                 <GreyInput
                 label="Email address"
                 keyboardType="email-address"
-                placeholder="example@gmail.com"/>
+                placeholder="example@gmail.com"
+                onChangeText={setEmail}
+                
+                value={email}
+                />
                 <GreyInput
                 label="Password"
                 secureTextEntry
-                placeholder="Write your password"/>
+                placeholder="Write your password"
+                onChangeText={setPassword}
+                value={password}
+                />
                 <TouchableOpacity onPress={() => navigation.navigate("UpdatePassword")}>
                     <Text style={styles.forgotPassowrd}>Forgot Password</Text>
                 </TouchableOpacity>
-                <DarkButtom style={styles.darkButtom} title='Sign In' />
+                <DarkButtom style={styles.darkButtom} title='Sign In' onPress={handlerLogin}/>
             </View>
             <View style={styles.socialButtonContainer}>
                 <LineComponent/>

@@ -12,7 +12,7 @@ const ApiTest = () => {
         const json = await response.json();
         setData(json.message);
       } catch (error) {
-        console.error(error);
+        setData(error)
       }
     };
 

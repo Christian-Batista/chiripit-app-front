@@ -3,7 +3,7 @@ import { StyleSheet, TextInput as RNTTextInput, View, Text, TextInputProps } fro
 
 interface GreyInputProps extends TextInputProps {
     label: string;
-    errorMessage: string;
+    errorMessage?: string;
     onChangeText: (text: string) => void;
     value: string;
     style?: any;
