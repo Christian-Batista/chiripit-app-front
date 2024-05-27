@@ -19,10 +19,17 @@ const Login = ({ navigation }) => {
         email: email,
         password: password,
       })
-      //guardar el token en el localStorage
+      if (response.data.response.token !== null) {
+        //guardar el token en el localStorage
       await AsyncStorage.setItem('jwtToken', response.data.response.token);
       navigation.navigate('Home');
+    } else {
+      Alert.alert("Error", response.data.response.msg);
+    }
+      
   } catch (error) {
+    console.log(error)
+
     Alert.alert("Error", error.message);
   }
   }

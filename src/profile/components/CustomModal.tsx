@@ -1,12 +1,15 @@
 import React, {useState} from 'react';
 import {Alert, Modal, StyleSheet, Text, Pressable, View} from 'react-native';
+import ChooseProviderButton from './ChooseProviderButton';
+import ChooseUserButton from './ChooseUserButton';
 
 interface CustomModalProps {
   isVisible: boolean;
-  setModalVisible: (visible: boolean) => void
+  setModalVisible: (visible: boolean) => void;
+  navigation: any;
 }
 
-const CustomModal = ({ isVisible, setModalVisible }: CustomModalProps) => {
+const CustomModal = ({ isVisible, setModalVisible, navigation }: CustomModalProps) => {
   return (
     <Modal
       animationType="slide"
@@ -19,13 +22,17 @@ const CustomModal = ({ isVisible, setModalVisible }: CustomModalProps) => {
     >
       <View style={styles.modalBackground}>
         <View style={styles.modalContent}>
-          <Text style={styles.modalText}>Hello World!</Text>
           <Pressable
             style={[styles.button, styles.buttonClose]}
             onPress={() => setModalVisible(false)}
           >
-            <Text style={styles.textStyle}>Hide Modal</Text>
+            <Text style={styles.textStyle}>X</Text>
           </Pressable>
+          <View style={styles.modalInfo}>
+            <Text style={styles.modalText}>Configura tu perfil</Text>
+            <ChooseProviderButton navigation={{navigation}}/>
+            <ChooseUserButton/>
+          </View>
         </View>
       </View>
     </Modal>
@@ -38,6 +45,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     justifyContent: 'center', // Cambiado de 'flex-end' a 'center'
     alignItems: 'center',
+    
   },
   modalContent: {
     width: '100%',
@@ -48,27 +56,37 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     elevation: 5,
     marginTop: 100,
-    paddingBottom: 700 // Ajustar este valor para mover el contenido hacia arriba
+    paddingBottom: 700, // Ajustar este valor para mover el contenido hacia arriba
+    position: 'relative'
+  },
+  modalInfo: {
+    marginTop: 90,
+    position: 'absolute',
   },
   button: {
     borderRadius: 20,
-    padding: 10,
+    paddingHorizontal: 7,
+    paddingVertical: 5,
     elevation: 2,
-  },
-  buttonOpen: {
-    backgroundColor: '#F194FF',
+    position: 'absolute',
+    marginStart: 20,
+    top: 28,
+    right:30
   },
   buttonClose: {
-    backgroundColor: '#2196F3',
+    backgroundColor: '#E8EBEC',
   },
   textStyle: {
-    color: 'white',
+    color: '#3A2F2D',
     fontWeight: 'bold',
     textAlign: 'center',
+    
   },
   modalText: {
-    marginBottom: 15,
     textAlign: 'center',
+    color: '#343030',
+    fontWeight: '800', // Texto gordito
+    fontSize: 20, // Tamaño de fuente más grande
   },
 });
 

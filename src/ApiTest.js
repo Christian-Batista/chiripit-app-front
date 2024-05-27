@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { API_ROUTE } from "@env";
 import { Button, StyleSheet, Text, View } from "react-native";
+import { jsx } from "react/jsx-runtime";
 
 const ApiTest = () => {
   const [data, setData] = useState("");
@@ -10,9 +11,11 @@ const ApiTest = () => {
       try {
         const response = await fetch(`${API_ROUTE}/test`);
         const json = await response.json();
+        console.log(json)
         setData(json.message);
       } catch (error) {
-        setData(error)
+        console.log(json)
+        setData(error.message)
       }
     };
 

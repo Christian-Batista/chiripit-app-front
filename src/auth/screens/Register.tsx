@@ -24,10 +24,16 @@ const Register = ({ navigation }) => {
               password: password,
               confirm_password: confirmPassword
             })
-            //guardar el token en el localStorage
-            await AsyncStorage.setItem('jwtToken', response.data.response.token);
-            navigation.navigate('Home');
+            if (response.data.response.token !== null) {
+              //guardar el token en el localStorage
+              await AsyncStorage.setItem('jwtToken', response.data.response.token);
+              navigation.navigate('Home');
+            } else {
+              Alert.alert("Error", response.data.response.msg);
+            }
+            
         } catch (error) {
+          console.log(error.message)
             Alert.alert("Error", error.message);
         }
     }

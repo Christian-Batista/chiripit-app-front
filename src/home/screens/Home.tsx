@@ -10,7 +10,7 @@ const Home = ({ navigation }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowModalDelay(true);
-    }, 1000); // 2000 milliseconds = 2 seconds
+    }, 1700); // 1700 milliseconds = 1.7 seconds
 
     return () => clearTimeout(timer);
   }, []);
