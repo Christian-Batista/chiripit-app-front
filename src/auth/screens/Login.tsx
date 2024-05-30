@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import {Image, StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Alert} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import {Image, StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Alert, ActivityIndicator, Modal} from 'react-native';
 import GreyInput from '../components/GreyInput';
 import DarkButtom from '../components/DarkButton';
 import LineComponent from '../components/LineComponent';
@@ -8,12 +8,22 @@ import FacebookSignInButton from '../components/FacebookSignInButton';
 import { API_ROUTE } from '@env';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import useAuth from '../hooks/useAuth';
 
 const Login = ({ navigation }) => {
+  const isAuthenticated = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigation.navigate('Home');
+    }
+  }, [isAuthenticated])
 
   const handlerLogin =  async () => {
+    setLoading(true);
     try {
       const response = await axios.post(`${API_ROUTE}/login`, {
         email: email,
@@ -23,15 +33,31 @@ const Login = ({ navigation }) => {
         //guardar el token en el localStorage
       await AsyncStorage.setItem('jwtToken', response.data.response.token);
       navigation.navigate('Home');
-    } else {
-      Alert.alert("Error", response.data.response.msg);
-    }
+      } else {
+        Alert.alert("Error", response.data.response.msg);
+      }
       
-  } catch (error) {
-    console.log(error)
-
-    Alert.alert("Error", error.message);
+    } catch (error) {
+      if (error.code === 'ECONNABORTED') {
+        Alert.alert("Error", "La solicitud ha tardado demasiado. Por favor, intenta nuevamente.");
+      } else {
+        console.log(error);
+        Alert.alert("Error", error.message);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
   }
+
+  if (isAuthenticated) {
+    return null;
   }
   return (
     <SafeAreaView style={styles.container}>
@@ -39,6 +65,7 @@ const Login = ({ navigation }) => {
                 <Image style={styles.image} source={require("../images/chiripita-blanca.gif")}/>
             </View>
             <View style={styles.loginFormContainer}>
+            
                 <GreyInput
                 label="Email address"
                 keyboardType="email-address"
@@ -72,8 +99,20 @@ const Login = ({ navigation }) => {
                     <Text style={styles.signUpText}>Sign Up</Text>
                 </TouchableOpacity>
                 </View>
-                
             </View>
+            {/* Modal para el indicador de carga */}
+              <Modal
+                transparent={true}
+                animationType="none"
+                visible={loading}
+                onRequestClose={() => {}}
+              >
+                <View style={styles.modalBackground}>
+                  <View style={styles.activityIndicatorWrapper}>
+                    <ActivityIndicator size="large" animating={loading} />
+                  </View>
+                </View>
+              </Modal>
     </SafeAreaView>
     
   );
@@ -137,6 +176,26 @@ const styles = StyleSheet.create({
   signUpText: {
     fontSize: 15,
     fontWeight: '600'
+  },
+  modalBackground: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  activityIndicatorWrapper: {
+    backgroundColor: '#FFFFFF',
+    height: 100,
+    width: 100,
+    borderRadius: 10,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 });
 

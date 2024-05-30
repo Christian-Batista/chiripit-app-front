@@ -14,7 +14,7 @@ const ApiTest = () => {
         console.log(json)
         setData(json.message);
       } catch (error) {
-        console.log(json)
+        console.log(error.message)
         setData(error.message)
       }
     };
