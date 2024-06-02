@@ -10,7 +10,7 @@ const Home = ({ navigation }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowModalDelay(true);
-    }, 1700); // 1700 milliseconds = 1.7 seconds
+    }, 2000); // 2000 milliseconds = 2 seconds
 
     return () => clearTimeout(timer);
   }, []);
@@ -28,10 +28,16 @@ const Home = ({ navigation }) => {
     //navigation.navigate('Login');
   };
 
+  const removeToken = async () => {
+    await AsyncStorage.removeItem('jwtToken');
+    navigation.navigate('Login');
+  }
+
   return (
     <View style={styles.container}>
       <Text>Bienvenido a la pantalla de home</Text>
       <Button title="Print token" onPress={handleLogout} />
+      <Button title="delete token" onPress={removeToken} />
       <CustomModal isVisible={modalVisible} setModalVisible={setModalVisible}/>
     </View>
   );
