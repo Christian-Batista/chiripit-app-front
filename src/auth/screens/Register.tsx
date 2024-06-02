@@ -40,7 +40,7 @@ const Register = ({ navigation }) => {
 
             if (response.data.response.token) {
                 await AsyncStorage.setItem('jwtToken', response.data.response.token);
-                navigation.navigate('Home');
+                navigation.navigate('HomeTabs');
             } else {
                 Alert.alert("Error", response.data.response.msg);
             }

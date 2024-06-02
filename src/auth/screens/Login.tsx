@@ -18,7 +18,7 @@ const Login = ({ navigation }) => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigation.navigate('Home');
+      navigation.navigate('HomeTabs');
     }
   }, [isAuthenticated])
 
@@ -32,7 +32,7 @@ const Login = ({ navigation }) => {
       if (response.data.response.token !== null) {
         //guardar el token en el localStorage
       await AsyncStorage.setItem('jwtToken', response.data.response.token);
-      navigation.navigate('Home');
+      navigation.navigate('HomeTabs');
       } else {
         Alert.alert("Error", response.data.response.msg);
       }

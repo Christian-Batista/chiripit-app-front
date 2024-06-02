@@ -7,6 +7,7 @@ import UpdatePassword from '../auth/screens/UpdatePassword'
 import Register from '../auth/screens/Register';
 import Home from '../home/screens/Home';
 import ProviderProfileScreen from '../profile/screens/ProviderProfileScreen';
+import BottomTab from './ButtomNavigator';
 
 const Stack = createNativeStackNavigator();
 
@@ -20,7 +21,7 @@ const StackNavigator = () => {
             <Stack.Screen name='Opening' component={Opening}/>
             <Stack.Screen name='Login' component={Login}/>
             <Stack.Screen name='Register' component={Register}/>
-            <Stack.Screen name='Home' component={Home}/>
+            <Stack.Screen name='HomeTabs' component={BottomTab} />
             <Stack.Screen name='UpdatePassword' component={UpdatePassword}/>
             <Stack.Screen name='ApiTest' component={ApiTest}/>
             <Stack.Screen name='ProviderProfileScreen' component={ProviderProfileScreen}/>
