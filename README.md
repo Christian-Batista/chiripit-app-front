@@ -1,14 +1,22 @@
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
-# Getting Started
+# ChiripitApp Frontend
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+## Overview
 
-## Step 1: Start the Metro Server
+Welcome to the ChiripitApp React Native project! This project serves as the frontend component of the [ChiripitApp platform](https://github.com/Christian-Batista/chiripit-app), which connects users with service providers for various needs. 
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+This repository contains the React Native application that will interface with the ChiripitApp backend API, providing a seamless experience for both Android and iOS users.
 
-To start Metro, run the following command from the _root_ of your React Native project:
+## Getting Started
+
+### Prerequisites
+
+Before you proceed, ensure that you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions up to the "Creating a new application" step.
+
+### Step 1: Start the Metro Server
+
+Metro is the JavaScript bundler that ships with React Native. To start Metro, run the following command from the root of your React Native project:
 
 ```bash
 # using npm
